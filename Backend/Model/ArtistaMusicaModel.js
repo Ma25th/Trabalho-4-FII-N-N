@@ -24,6 +24,16 @@ class ArtistaMusica {
              WHERE am.artista_id = ?`, [artistaId]);
         return rows;
     }
+
+    static async getAllAssociations() {
+        const [rows] = await db.query(
+            `SELECT am.artista_id, am.musica_id, a.nome AS nome_artista, m.titulo AS titulo_musica
+             FROM artista_musica am
+             INNER JOIN artistas a ON am.artista_id = a.id
+             INNER JOIN musicas m ON am.musica_id = m.id`
+        );
+        return rows;
+    }
 }
 
 module.exports = ArtistaMusica;

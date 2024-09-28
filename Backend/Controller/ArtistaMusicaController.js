@@ -2,7 +2,7 @@ const ArtistaMusica = require('../Model/ArtistaMusicaModel');
 
 exports.associateArtistaToMusica = async (req, res) => {
     try {
-        const { artistaIds } = req.body; // Array de IDs de artistas
+        const { artistaIds } = req.body; 
         const musicaId = req.params.id;
 
         for (let artistaId of artistaIds) {
@@ -41,6 +41,15 @@ exports.getMusicsByArtist = async (req, res) => {
     try {
         const musicas = await ArtistaMusica.getMusicsByArtist(req.params.id);
         res.json(musicas);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.getAllAssociations = async (req, res) => {
+    try {
+        const associations = await ArtistaMusica.getAllAssociations();
+        res.json(associations);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
